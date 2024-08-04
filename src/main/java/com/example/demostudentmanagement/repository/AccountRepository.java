@@ -22,7 +22,7 @@ public class AccountRepository {
 
             if (affectedRows == 0) {
                 connection.rollback();
-                throw new AccountException();
+                throw new AccountException("Co loi xay ra");
             }
 
             try (ResultSet generatedKeys = preparedStatement.getGeneratedKeys()) {
@@ -33,11 +33,11 @@ public class AccountRepository {
                     return savedAccount;
                 } else {
                     connection.rollback();
-                    throw new AccountException();
+                    throw new AccountException("Error creating account");
                 }
             }
         } catch (SQLException e) {
-            throw new AccountException();
+            throw new AccountException("An error occurred while fetching data from the database.", e);
         }
     }
 }

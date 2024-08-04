@@ -23,7 +23,7 @@ public class FullNameRepository {
 
             if (affectedRows == 0) {
                 connection.rollback();
-                throw new FullNameException();
+                throw new FullNameException("Error creating full name");
             }
 
             try (ResultSet generatedKeys = preparedStatement.getGeneratedKeys()) {
@@ -34,11 +34,11 @@ public class FullNameRepository {
                     return savedFullName;
                 } else {
                     connection.rollback();
-                    throw new FullNameException();
+                    throw new FullNameException("Error creating full name");
                 }
             }
         } catch (SQLException e) {
-            throw new FullNameException();
+            throw new FullNameException("An error occurred while fetching data from the database.", e);
         }
     }
 

@@ -23,7 +23,7 @@ public class AddressRepository {
 
             if (affectedRows == 0) {
                 connection.rollback();
-                throw new AddressException();
+                throw new AddressException("Error creating address");
             }
 
             try (ResultSet generatedKeys = preparedStatement.getGeneratedKeys()) {
@@ -34,11 +34,11 @@ public class AddressRepository {
                     return savedAddress;
                 } else {
                     connection.rollback();
-                    throw new AddressException();
+                    throw new AddressException("Error creating address");
                 }
             }
         } catch (SQLException e) {
-            throw new AddressException();
+            throw new AddressException("An error occurred while fetching data from the database.", e);
         }
     }
 }
